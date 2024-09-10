@@ -131,26 +131,46 @@ app = FastAPI()
 #     return results
 
 
-from uuid import UUID
-from datetime import datetime, timedelta, time
+# from uuid import UUID
+# from datetime import datetime, timedelta, time
 
 
-@app.put("/items/{item_id}")
+# @app.put("/items/{item_id}")
+# async def read_items(
+#     item_id: UUID,
+#     start_date: datetime or None = Body(None),
+#     end_date: datetime or None = Body(None),
+#     repeat_at: time or None = Body(None),
+#     process_after: timedelta or None = Body(None),
+# ):
+#     start_process = start_date + process_after
+#     duration = end_date - start_process
+#     return {
+#         "item_id": item_id,
+#         "start_date": start_date,
+#         "end_date": end_date,
+#         "repeat_at": repeat_at,
+#         "process_after": process_after,
+#         "start_process": start_process,
+#         "duration": duration,
+#     }
+
+# Cookie and header params
+from fastapi import Cookie, Header
+
+
+@app.get("/items")
 async def read_items(
-    item_id: UUID,
-    start_date: datetime or None = Body(None),
-    end_date: datetime or None = Body(None),
-    repeat_at: time or None = Body(None),
-    process_after: timedelta or None = Body(None),
+    cookie_id: str or None = Cookie(None),
+    accept_encoding: str or None = Header(None),
+    sec_ch_ua: str or None = Header(None),
+    user_agent: str or None = Header(None),
+    x_token: List[str] or None = Header(None),
 ):
-    start_process = start_date + process_after
-    duration = end_date - start_process
     return {
-        "item_id": item_id,
-        "start_date": start_date,
-        "end_date": end_date,
-        "repeat_at": repeat_at,
-        "process_after": process_after,
-        "start_process": start_process,
-        "duration": duration,
+        "cookie_id": cookie_id,
+        "Accept-Encoding": accept_encoding,
+        "sec-ch-ua": sec_ch_ua,
+        "User-Agent": user_agent,
+        "X-Token values": x_token,
     }

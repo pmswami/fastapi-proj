@@ -6,3 +6,10 @@ https://www.geeksforgeeks.org/fastapi-path-parameters/
 
 Request body
 https://fastapi.tiangolo.com/tutorial/body/#automatic-docs
+
+Request Headers
+https://fastapi.tiangolo.com/tutorial/header-params/#declare-header-parameters
+
+Cookies
+https://fastapi.tiangolo.com/tutorial/cookie-params/
+
