@@ -155,22 +155,86 @@ app = FastAPI()
 #         "duration": duration,
 #     }
 
-# Cookie and header params
-from fastapi import Cookie, Header
+# # Cookie and header params
+# from fastapi import Cookie, Header
 
 
-@app.get("/items")
-async def read_items(
-    cookie_id: str or None = Cookie(None),
-    accept_encoding: str or None = Header(None),
-    sec_ch_ua: str or None = Header(None),
-    user_agent: str or None = Header(None),
-    x_token: List[str] or None = Header(None),
-):
-    return {
-        "cookie_id": cookie_id,
-        "Accept-Encoding": accept_encoding,
-        "sec-ch-ua": sec_ch_ua,
-        "User-Agent": user_agent,
-        "X-Token values": x_token,
-    }
+# @app.get("/items")
+# async def read_items(
+#     cookie_id: str or None = Cookie(None),
+#     accept_encoding: str or None = Header(None),
+#     sec_ch_ua: str or None = Header(None),
+#     user_agent: str or None = Header(None),
+#     x_token: List[str] or None = Header(None),
+# ):
+#     return {
+#         "cookie_id": cookie_id,
+#         "Accept-Encoding": accept_encoding,
+#         "sec-ch-ua": sec_ch_ua,
+#         "User-Agent": user_agent,
+#         "X-Token values": x_token,
+#     }
+
+
+# Response Model
+from pydantic import EmailStr
+from typing import Literal
+
+
+class Item(BaseModel):
+    name: str
+    description: str or None = None
+    price: float
+    tax: float = 10.5
+    tags: List[str] = []
+
+
+@app.post("/items/", response_model=Item)
+async def create_item(item: Item):
+    return item
+
+
+class UserBase(BaseModel):
+    username: str
+    email: EmailStr
+    full_name: str or None = None
+
+
+class UserIn(UserBase):
+    password: str
+
+
+class UserOut(UserBase):
+    pass
+
+
+@app.post("/user/", response_model=UserOut)
+async def create_user(user: UserIn):
+    return user
+
+
+items = {
+    "foo": {"name": "Foo", "price": 50.2},
+    "bar": {"name": "Bar", "description": "The bartenders", "price": 62, "tax": 20.2},
+    "baz": {"name": "Baz", "description": None, "price": 50.2, "tax": 10.5, "tags": []},
+}
+
+
+# excludes fields from response which are not set
+@app.get("/items/{item_id}", response_model=Item, response_model_exclude_unset=True)
+async def read_item(item_id: Literal["foo", "bar", "baz"]):
+    return items[item_id]
+
+
+@app.get(
+    "/items/{item_id}/name",
+    response_model=Item,
+    response_model_include={"name", "description"},
+)
+async def read_item_name(item_id: Literal["foo", "bar", "baz"]):
+    return items[item_id]
+
+
+@app.get("/items/{item_id}/public", response_model=Item, response_model_exclude={"tax"})
+async def read_items_public_data(item_id: Literal["foo", "bar", "baz"]):
+    return items[item_id]

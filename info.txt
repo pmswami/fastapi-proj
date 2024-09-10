@@ -13,3 +13,5 @@ https://fastapi.tiangolo.com/tutorial/header-params/#declare-header-parameters
 Cookies
 https://fastapi.tiangolo.com/tutorial/cookie-params/
 
+Response Model
+https://www.geeksforgeeks.org/fastapi-response-model/
