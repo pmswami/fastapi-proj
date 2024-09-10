@@ -3,3 +3,6 @@ https://docs.pydantic.dev/latest/api/fields/
 
 Route Paths
 https://www.geeksforgeeks.org/fastapi-path-parameters/
+
+Request body
+https://fastapi.tiangolo.com/tutorial/body/#automatic-docs
