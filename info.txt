@@ -1,0 +1,5 @@
+Model Fields
+https://docs.pydantic.dev/latest/api/fields/
+
+Route Paths
+https://www.geeksforgeeks.org/fastapi-path-parameters/
