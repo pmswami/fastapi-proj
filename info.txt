@@ -15,3 +15,9 @@ https://fastapi.tiangolo.com/tutorial/cookie-params/
 
 Response Model
 https://www.geeksforgeeks.org/fastapi-response-model/
+
+Response status codes
+https://fastapi.tiangolo.com/tutorial/response-status-code/#about-http-status-codes
+https://docs.w3cub.com/fastapi/advanced/response-cookies/index
+
+
