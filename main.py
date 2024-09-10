@@ -77,55 +77,80 @@ app = FastAPI()
 #         }
 
 
-class Item(BaseModel):
-    name: str = Field(None)
-    description: str = Field(None)
-    price: float = Field(0)
-    tax: float = Field(0)
+# class Item(BaseModel):
+#     name: str = Field(None)
+#     description: str = Field(None)
+#     price: float = Field(0)
+#     tax: float = Field(0)
 
-    class Config:
-        json_schema_extra = {
-            "example": {
-                "name": "Foo",
-                "description": "A very nice Item",
-                "price": 16.25,
-                "tax": 1.67,
-            }
-        }
+#     class Config:
+#         json_schema_extra = {
+#             "example": {
+#                 "name": "Foo",
+#                 "description": "A very nice Item",
+#                 "price": 16.25,
+#                 "tax": 1.67,
+#             }
+#         }
+
+
+# @app.put("/items/{item_id}")
+# async def update_item(
+#     item_id: int,
+#     item: Item,
+#     # item: Item = Body(
+#     #     ...,
+#     #     # example={"name": "foo", "desc": "nice desc", "price": 10, "tax": 20},
+#     #     examples={
+#     #         "normal": {
+#     #             "summary": "A normal example",
+#     #             "description": "A __normal__ item works _correctly_",
+#     #             "value": {
+#     #                 "name": "Foo",
+#     #                 "description": "A very nice Item",
+#     #                 "price": 16.25,
+#     #                 "tax": 1.67,
+#     #             },
+#     #         },
+#     #         "converted": {
+#     #             "summary": "An example with converted data",
+#     #             "description": "FastAPI can convert price `strings` to actual `numbers` automatically",
+#     #             "value": {"name": "Bar", "price": "16.25"},
+#     #         },
+#     #         "invalid": {
+#     #             "summary": "Invalid data is rejected with an error",
+#     #             "description": "Hello youtubers",
+#     #             "value": {"name": "Baz", "price": "sixteen point two five"},
+#     #         },
+#     #     },
+#     #     embed=True,
+#     #     type=Dict,
+#     # ),
+# ):
+#     results = {"item_id": item_id, "item": item}
+#     return results
+
+
+from uuid import UUID
+from datetime import datetime, timedelta, time
 
 
 @app.put("/items/{item_id}")
-async def update_item(
-    item_id: int,
-    item: Item,
-    # item: Item = Body(
-    #     ...,
-    #     # example={"name": "foo", "desc": "nice desc", "price": 10, "tax": 20},
-    #     examples={
-    #         "normal": {
-    #             "summary": "A normal example",
-    #             "description": "A __normal__ item works _correctly_",
-    #             "value": {
-    #                 "name": "Foo",
-    #                 "description": "A very nice Item",
-    #                 "price": 16.25,
-    #                 "tax": 1.67,
-    #             },
-    #         },
-    #         "converted": {
-    #             "summary": "An example with converted data",
-    #             "description": "FastAPI can convert price `strings` to actual `numbers` automatically",
-    #             "value": {"name": "Bar", "price": "16.25"},
-    #         },
-    #         "invalid": {
-    #             "summary": "Invalid data is rejected with an error",
-    #             "description": "Hello youtubers",
-    #             "value": {"name": "Baz", "price": "sixteen point two five"},
-    #         },
-    #     },
-    #     embed=True,
-    #     type=Dict,
-    # ),
+async def read_items(
+    item_id: UUID,
+    start_date: datetime or None = Body(None),
+    end_date: datetime or None = Body(None),
+    repeat_at: time or None = Body(None),
+    process_after: timedelta or None = Body(None),
 ):
-    results = {"item_id": item_id, "item": item}
-    return results
+    start_process = start_date + process_after
+    duration = end_date - start_process
+    return {
+        "item_id": item_id,
+        "start_date": start_date,
+        "end_date": end_date,
+        "repeat_at": repeat_at,
+        "process_after": process_after,
+        "start_process": start_process,
+        "duration": duration,
+    }
