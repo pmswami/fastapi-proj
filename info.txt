@@ -20,4 +20,5 @@ Response status codes
 https://fastapi.tiangolo.com/tutorial/response-status-code/#about-http-status-codes
 https://docs.w3cub.com/fastapi/advanced/response-cookies/index
 
-
+Files
+https://fastapi.tiangolo.com/tutorial/request-files/

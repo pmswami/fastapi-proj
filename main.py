@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Query, Path, Body, status, Form
+from fastapi import FastAPI, Query, Path, Body, status, Form, File, UploadFile
 from enum import Enum
 from typing import Optional, List, Set, Dict, Union, Literal
 from pydantic import BaseModel, Field, HttpUrl, EmailStr
@@ -302,7 +302,7 @@ app = FastAPI()
 # }
 
 
-# @app.get("/items/{item_id}", response_model=Union[PlaneItem, CarItem])
+# @app.get("/items/{item_id}", response_model=Union[ Item, CarItem])
 # async def read_item(item_id: Literal["item1", "item2"]):
 #     return items[item_id]
 
@@ -345,14 +345,65 @@ app = FastAPI()
 #     return {"hello": "world"}
 
 
-# Form Fields
-@app.post("/login/")
-async def login(username: str = Form(...), password: str = Body(...)):
-    print("password", password)
-    return {"username": username}
+# # Form Fields
+# @app.post("/login/")
+# async def login(username: str = Form(...), password: str = Body(...)):
+#     print("password", password)
+#     return {"username": username}
 
 
-@app.post("/login-json/")
-async def login_json(username: str = Body(...), password: str = Body(...)):
-    print("password", password)
-    return {"username": username}
+# @app.post("/login-json/")
+# async def login_json(username: str = Body(...), password: str = Body(...)):
+#     print("password", password)
+#     return {"username": username}
+
+
+# # Request Files
+# @app.post("/files/")
+# async def create_file(
+#     files: bytes or None = File(None, description="A file read as bytes")
+# ):
+#     if files:
+#         return {"file_sizes": len(files)}
+#     else:
+#         return {"message": "No Files attached"}
+
+
+# # @app.post("/files/")
+# # async def create_file(
+# #     files: List[bytes] = File(..., description="A file read as bytes")
+# # ):
+# #     return {"file_sizes": [len(file) for file in files]}
+
+
+# @app.post("/uploadfile/")
+# async def create_upload_file(
+#     file: UploadFile or None = File(None, description="A file read as UploadFile")
+# ):
+#     if file:
+#         return {"filename": file.filename}
+#     else:
+#         return {"message": "No file is attached"}
+
+
+# # @app.post("/uploadfile/")
+# # async def create_upload_file(
+# #     files: List[UploadFile] = File(..., description="A file read as UploadFile")
+# # ):
+# #     return {"filename": [file.filename + " " + str(file.size) for file in files]}
+
+
+# Request Forms and Files
+@app.post("/files/")
+async def create_file(
+    file: bytes = File(...),
+    fileb: UploadFile = File(...),
+    token: str = Form(...),
+    hello: str = Body(...),
+):
+    return {
+        "file_size": len(file),
+        "token": token,
+        "fileb_content_type": fileb.content_type,
+        "hello": hello,
+    }
