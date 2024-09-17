@@ -32,3 +32,6 @@ https://fastapi.tiangolo.com/tutorial/handling-errors/
 JSONable encoder
 https://fastapi.tiangolo.com/tutorial/encoder/
 
+Dependencies
+https://fastapi.tiangolo.com/tutorial/dependencies/#what-is-dependency-injection
+
