@@ -22,3 +22,9 @@ https://docs.w3cub.com/fastapi/advanced/response-cookies/index
 
 Files
 https://fastapi.tiangolo.com/tutorial/request-files/
+
+Path Operation Configuration
+https://fastapi.tiangolo.com/tutorial/path-operation-configuration/#tags
+
+Exception handling
+https://fastapi.tiangolo.com/tutorial/handling-errors/
