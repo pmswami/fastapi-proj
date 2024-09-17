@@ -32,6 +32,8 @@ https://fastapi.tiangolo.com/tutorial/handling-errors/
 JSONable encoder
 https://fastapi.tiangolo.com/tutorial/encoder/
 
-Dependencies
+Function based Dependencies
 https://fastapi.tiangolo.com/tutorial/dependencies/#what-is-dependency-injection
 
+Class Based dependencies
+https://fastapi.tiangolo.com/tutorial/dependencies/classes-as-dependencies/
