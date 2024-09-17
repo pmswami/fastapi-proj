@@ -28,3 +28,7 @@ https://fastapi.tiangolo.com/tutorial/path-operation-configuration/#tags
 
 Exception handling
 https://fastapi.tiangolo.com/tutorial/handling-errors/
+
+JSONable encoder
+https://fastapi.tiangolo.com/tutorial/encoder/
+
